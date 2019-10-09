@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 # master分支
-=======
-# dev-toc分支
->>>>>>> [haozk1] #n/a 代码提交
 
 > A Vue.js project
 
