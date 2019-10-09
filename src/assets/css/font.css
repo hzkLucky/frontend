@@ -1,0 +1,12 @@
+@font-face {
+  font-family: "SanvitoPro-LtDisp";
+  src: url('./ttf/Rosemary.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "arial-bold";
+  src: url('./ttf/arial-bold.otf');
+  font-weight: normal;
+  font-style: normal;
+}
