@@ -5,8 +5,11 @@
     </div>
     <div :class="{right: $route.path !== '/'}">
     <div class="title__data-base" v-if="$route.path !== '/'">
+       <span class="title__btn" @click="writerAPen" style="background: #3366CC">记一笔</span>
       <span class="title__btn" @click="logoOut">退出登录</span>
     </div>
+    <writer-a-pen ref="dialog"></writer-a-pen>
+
     <router-view />
     </div>
   </div>
@@ -14,14 +17,24 @@
 
 <script>
 import navMenu from './components/ui/NavMenu'
+import writerAPen from '../src/components/ui/writeAPen'
 export default {
   name: "App",
   components: {
-    navMenu
+    navMenu,
+    writerAPen
+  },
+  data(){
+    return {
+    }
   },
   methods: {
     logoOut() {
       this.$router.push('/')
+    },
+    writerAPen(){
+     this.$refs.dialog.open()
+      console.log('记一笔')
     }
   }
 };

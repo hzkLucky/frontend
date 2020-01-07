@@ -21,11 +21,11 @@
             <span class="account__name">你的账户</span>
           </div>
           <div class="account__content">
-            <span class="account__content__left">￥158.28</span>
+            <span class="account__content__left">￥{{income}}</span>
             <span class="account__content__right">
-              <div>本月支出￥158.28</div>
+              <div>本月支出￥{{penSum}}</div>
               <el-progress
-                :percentage="percentageData"
+                :percentage="parseInt(percentageData)"
                 :text-inside="true"
                 :stroke-width="12"
                 status="exception"
@@ -97,7 +97,10 @@ export default {
   },
   data() {
     return {
+      penSum: 0,
+      income: 0,
       userCount: 0,
+      columnAndPen: {pen: [], column: []},
       radarData: [
     [85, 65, 55, 90, 82, 43], 100, [{
         "name": "居住",
@@ -160,6 +163,16 @@ export default {
     };
   },
   created() {
+    console.log('d3' + d3)
+    this.$axios.get('/gucp/penAndIncome').then( data => {
+      this.columnAndPen = data.data.body
+    })
+    this.$axios.get('/gucp/incomeSum').then( data => {
+      this.income = data.data.body[0].incomeSum
+    })
+    this.$axios.get('/gucp/penSum').then( data => {
+      this.penSum = data.data.body[0].penSum
+    })
     this.$axios.get('/gucp/getUsereCount').then( res => {
       this.userCount = res.data.data.count
     })
@@ -367,6 +380,7 @@ export default {
       }
       xmlhttp.onreadystatechange = () => {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+          console.log(xmlhttp.response)
           if (JSON.parse(xmlhttp.response)) {
             let data = JSON.parse(xmlhttp.response);
             data.data[0].tem ? (this.tem = data.data[0].tem) : (this.tem = "");

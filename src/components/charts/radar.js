@@ -50,7 +50,7 @@ var option = {
         nameGap: 5,
         indicator: holeTypeData,
         center: ['50%', '50%'],
-        radius: '80%',
+        radius: '70%',
         name: {
             textStyle: {
                 fontSize: 15 * scale,
