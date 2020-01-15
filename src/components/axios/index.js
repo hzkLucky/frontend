@@ -1,15 +1,17 @@
 import axios from 'axios'
 
 axios.defaults.baseURL='http://localhost:3000';
-// 设置axios请求的token
-// axios.defaults.headers.common['token'] = 'f4c902c9ae5a2a9d8f84868ad064e706'
+
 //设置请求头
 // axios.defaults.headers.post["Content-type"] = "application/json;charset=utf-8"
 var service = axios.create({
     timeout: 5000
 })
 service.interceptors.request.use( function( config ) {
-  config.headers['token'] = 'f4c902c9ae5a2a9d8f84868ad064e706'
+    if(!config.url.includes('gucp/user')){
+        let token = localStorage.getItem('token')
+        config.headers['token'] = token
+    }
   return config
 },
 function( error ) {
@@ -18,6 +20,7 @@ function( error ) {
 )
 
 service.interceptors.response.use( function( response ) {
+
  return response
 },
  function( error ) {
@@ -33,11 +36,8 @@ service.get = function(url,param){
 return new Promise((resolve,reject)=>{
     service({
         method:'get',
-        url,
-        params:param,
-        headers: {
-    		'Content-Type': 'application/json',
-  	}
+        url:url,
+        params:param
     }).then(res=>{  //axios返回的是一个promise对象
         resolve(res)  //resolve在promise执行器内部 
     }).catch(err=>{
@@ -48,14 +48,12 @@ return new Promise((resolve,reject)=>{
 }
 // post请求
   service.post = function(url, param) {
+     
     return new Promise( (resolve) => {
         service({
             method:'post',
-            url,
-            data:param,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-          }
+            url:url,
+            data:param
         }).then( (res) => {
             resolve(res)
         })
@@ -63,5 +61,5 @@ return new Promise((resolve,reject)=>{
 }
 
 export const registerAxios = function(vue) {
-    vue.prototype.$axios = axios
+    vue.prototype.$axios = service
 }

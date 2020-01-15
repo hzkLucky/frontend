@@ -8,7 +8,7 @@
        <span class="title__btn" @click="writerAPen" style="background: #3366CC">记一笔</span>
       <span class="title__btn" @click="logoOut">退出登录</span>
     </div>
-    <writer-a-pen ref="dialog"></writer-a-pen>
+    <pen ref="dialog"></pen>
 
     <router-view />
     </div>
@@ -17,12 +17,12 @@
 
 <script>
 import navMenu from './components/ui/NavMenu'
-import writerAPen from '../src/components/ui/writeAPen'
+import pen from '../src/components/ui/writeAPen'
 export default {
   name: "App",
   components: {
     navMenu,
-    writerAPen
+    pen
   },
   data(){
     return {
@@ -34,7 +34,6 @@ export default {
     },
     writerAPen(){
      this.$refs.dialog.open()
-      console.log('记一笔')
     }
   }
 };

@@ -163,7 +163,6 @@ export default {
     };
   },
   created() {
-    console.log('d3' + d3)
     this.$axios.get('/gucp/penAndIncome').then( data => {
       this.columnAndPen = data.data.body
     })
@@ -370,31 +369,10 @@ export default {
   },
   methods: {
     getWeather() {
-      let xmlhttp = null;
-      if (window.XMLHttpRequest) {
-        // code for Firefox, Opera, IE7, etc.
-        xmlhttp = new XMLHttpRequest();
-      } else if (window.ActiveXObject) {
-        // code for IE6, IE5
-        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-      }
-      xmlhttp.onreadystatechange = () => {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-          console.log(xmlhttp.response)
-          if (JSON.parse(xmlhttp.response)) {
-            let data = JSON.parse(xmlhttp.response);
-            data.data[0].tem ? (this.tem = data.data[0].tem) : (this.tem = "");
-            data.cityEn ? (this.city = data.cityEn) : "";
-            data.countryEn ? (this.country = data.countryEn) : "";
-          }
-
-          return xmlhttp.responseText;
-        }
-      };
-      //open设置请求方式和请求路径
-      xmlhttp.open("get", "https://www.tianqiapi.com/api/?version=v1"); //
-      //send 发送
-      xmlhttp.send();
+      // 因为天气接口需要注册付费所以就不用了
+            this.tem = '2℃'
+            this.city = 'Beijing'
+            this.country = 'china'
     },
     setHours(hours) {
       if (hours <= 12) {

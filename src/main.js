@@ -26,6 +26,10 @@ const i18n = new VueI18n({
       'en': require('../src/components/i18n/en.js')
   }
 })
+// router.beforeEach(function(to, from, next){
+//   console.log(to)
+//   next()
+// })
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

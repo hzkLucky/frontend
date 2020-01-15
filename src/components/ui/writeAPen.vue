@@ -5,7 +5,6 @@
   :visible.sync="dialogVisible"
   width="50%"
   >
-   <writer-a-pen></writer-a-pen>
         <el-row>
      <el-radio v-model="radio" label="1">支出</el-radio>
   <el-radio v-model="radio" label="2">收入</el-radio>

@@ -154,7 +154,7 @@ export default {
           name: this.form.name,
           password: this.form.password
         }).then( data => {
-          if( data.data.data.pass === false ){
+          if( data.data.pass === false ){
             this.$message({
           message: '用户名或密码错误',
           type: 'warning'
@@ -163,6 +163,8 @@ export default {
         this.form.password = ''
           }
           else{
+             localStorage.setItem('token', data.data.data.token)
+            // this.$axios.defaults.headers.common['token'] = data.data.token 
             this.$store.commit('admin', data.data.data.type)
             this.$router.push('/index')
           }
