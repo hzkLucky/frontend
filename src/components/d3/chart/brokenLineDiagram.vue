@@ -57,7 +57,9 @@ export default {
           return yScale(d[1])
       })
        let accent = d3.scaleOrdinal(d3.schemeAccent); // d3中随机颜色分布
-      svg.selectAll('path').data(dataSet).enter().append('path').transition().duration(2000)
+      svg.selectAll('path').data(dataSet).enter().append('path').transition().duration(2000).on('start', function(d,i){
+          console.log('start')
+      }) // 通过on去绑定事件 类型包括start开始 end结束 interrupt过度被中断
       .attr('d', function(d,i){
           return linePath(d.gdp)
       }).attr('fill', 'none')
