@@ -3,7 +3,7 @@
    <div class="info">
        <div class="info__logo">
            <img src="../../assets/logo.png" alt="">
-           <span class="info__name">Rays1111111111111111111111111111</span>
+           <span class="info__name">Raysiu</span>
        </div>
    </div>
    <div class="menu-content">
