@@ -1,10 +1,14 @@
 <template>
   <div class="login">
     <div class="content">
-      <div class="title">欢迎您回来! 
+      <div class="title">欢迎您回来!
         <!-- <span @click="changeLange">zh-cn/en</span> -->
-        </div>
-      <el-form ref="form" :model="form" class="form">
+      </div>
+      <el-form
+        ref="form"
+        :model="form"
+        class="form"
+      >
         <el-form-item>
           <el-input
             ref="itCode"
@@ -15,7 +19,8 @@
           />
         </el-form-item>
         <el-form-item>
-          <el-input type="password"
+          <el-input
+            type="password"
             ref="itCode"
             v-model="form.password"
             placeholder="请输入密码"
@@ -30,60 +35,96 @@
           type="warning"
           class="login-btn"
         >密码登录</el-button>
-        <span class="register" @click="register">注册</span>
+        <span
+          class="register"
+          @click="register"
+        >注册</span>
       </div>
-         <el-dialog title="注册用户" ref="register" :visible.sync="dialogFormVisible" class="dialog">
-  <el-row>
-    <el-col :span="4">用户名:</el-col>
-    <el-col :span="20"> <el-input v-model="registerName" autocomplete="off"></el-input></el-col>
-  </el-row>
-    <el-row>
-       <el-col :span="4">
-         密码:
-       </el-col>
-       <el-col :span="20">
-          <el-input v-model="registerPassword" autocomplete="off" type="password"></el-input>
-       </el-col>
-      </el-row> 
-       <el-row>
-         <el-col :span="4">
+      <el-dialog
+        title="注册用户"
+        ref="register"
+        :visible.sync="dialogFormVisible"
+        class="dialog"
+      >
+        <el-row>
+          <el-col :span="4">用户名:</el-col>
+          <el-col :span="20">
+            <el-input
+              v-model="registerName"
+              autocomplete="off"
+            ></el-input>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="4">
+            密码:
+          </el-col>
+          <el-col :span="20">
+            <el-input
+              v-model="registerPassword"
+              autocomplete="off"
+              type="password"
+            ></el-input>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="4">
             注册类型:
-         </el-col>
-         <el-col :span="20" >
-              <el-radio v-model="registerType" label="user">普通用户</el-radio>
-  <el-radio v-model="registerType" label="admin">管理员</el-radio>
-         </el-col>
-       </el-row>
-    
-       
-    
-  <div slot="footer" class="dialog-footer">
-    <el-button type="primary" @click="submitRegister">确 定</el-button>
-  </div>
-</el-dialog>
+          </el-col>
+          <el-col :span="20">
+            <el-radio
+              v-model="registerType"
+              label="user"
+            >普通用户</el-radio>
+            <el-radio
+              v-model="registerType"
+              label="admin"
+            >管理员</el-radio>
+          </el-col>
+        </el-row>
+
+        <div
+          slot="footer"
+          class="dialog-footer"
+        >
+          <el-button
+            type="primary"
+            @click="submitRegister"
+          >确 定</el-button>
+        </div>
+      </el-dialog>
     </div>
- 
+
   </div>
 </template>
 
 <script>
 import vue from "vue";
-import { type } from 'os';
+import { mapGetters } from "vuex";
+import { type } from "os";
 export default {
-  extends: 'sql',
+  extends: "sql",
   data() {
     return {
       dialogFormVisible: false,
-      registerName: '',
-      registerPassword: '',
-      registerType: 'user',
+      registerName: "",
+      registerPassword: "",
+      registerType: "user",
       form: {
-        language: 'zh-cn',
+        language: "zh-cn",
         name: "",
         password: ""
       }
     };
   },
+  // vuex使用
+  // mounted(){
+  //   this.$store.dispatch('setUserName', 'hzk')
+  //   console.log(this.userName)
+  // },
+  // computed: {
+  //   ...mapGetters(['userName'])
+  // },
   methods: {
     // changeLange() {
     //      this.$confirm('确定切换语言吗?', '提示', {
@@ -101,74 +142,73 @@ export default {
     // }).catch(() => {
     //    this.$message({
     //        type: 'info',
-    //    });          
+    //    });
     // });
 
     // },
     submitRegister() {
-      if(!this.registerName) {
-          this.$message({
-          message: '用户名不能为空',
-          type: 'warning'
+      if (!this.registerName) {
+        this.$message({
+          message: "用户名不能为空",
+          type: "warning"
         });
+      } else if (!this.registerPassword) {
+        this.$message({
+          message: "注册密码不能为空",
+          type: "warning"
+        });
+      } else {
+        this.$axios
+          .post("/gucp/register", {
+            userName: this.registerName,
+            passWord: this.registerPassword,
+            type: this.registerType
+          })
+          .then(data => {
+            if (data.data.data.pass) {
+              this.$message({
+                message: "您的注册申请已提交",
+                type: "success"
+              });
+              this.dialogFormVisible = false;
+            } else {
+              this.$message({
+                message: "该用户已被注册",
+                type: "warn"
+              });
+            }
+            this.registerName = "";
+            this.registerPassword = "";
+            this.registerType = "user";
+          });
       }
-      else if( !this.registerPassword) {
-        this.$message( {
-         
-            message: '注册密码不能为空',
-            type: 'warning'
-        })
-      }
-      else {
-         this.$axios.post('/gucp/register', {
-          userName: this.registerName,
-          passWord: this.registerPassword,
-          type: this.registerType
-        }).then( data => {
-           if( data.data.data.pass) {
-             this.$message({
-               message: '您的注册申请已提交',
-               type: 'success'
-             })
-             this.dialogFormVisible = false
-           }
-           else {
-             this.$message({
-               message: '该用户已被注册',
-               type: 'warn'
-             })
-           }
-            this.registerName = ''
-             this.registerPassword = ''
-             this.registerType = 'user'
-        })
-      }
-       
     },
     register() {
-        // this.$refs.register.open()
-        this.dialogFormVisible = true
-      },
+      // this.$refs.register.open()
+      this.dialogFormVisible = true;
+    },
     normalLogin() {
-        this.$axios.post(`/gucp/user`, {
+      this.$axios
+        .post(`/gucp/user`, {
           name: this.form.name,
           password: this.form.password
-        }).then( data => {
-          if( data.data.pass === false ){
-            this.$message({
-          message: '用户名或密码错误',
-          type: 'warning'
-        });
-        this.form.name = ''
-        this.form.password = ''
-          }
-          else{
-             localStorage.setItem('token', data.data.data.token)
-            // this.$axios.defaults.headers.common['token'] = data.data.token 
-            this.$store.commit('admin', data.data.data.type)
-            this.$router.push('/index')
-          }
         })
+        .then(data => {
+          console.log(data.data.data.pass);
+          if (data.data.data.pass === false) {
+            this.$message({
+              message: "用户名或密码错误",
+              type: "warning"
+            });
+            this.form.name = "";
+            this.form.password = "";
+          } else {
+            localStorage.setItem("token", data.data.data.token);
+            // this.$axios.defaults.headers.common['token'] = data.data.token
+            this.$store.commit("admin", data.data.data.type);
+            this.$router.push("/index");
+          }
+        });
     }
   }
 };

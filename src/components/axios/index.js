@@ -8,10 +8,10 @@ var service = axios.create({
     timeout: 5000
 })
 service.interceptors.request.use( function( config ) {
-    if(!config.url.includes('gucp/user')){
-        let token = localStorage.getItem('token')
-        config.headers['token'] = token
-    }
+        let token = localStorage.getItem("token");
+        if (token) {  // 判断是否存在token，如果存在的话，则每个http header都加上token
+          config.headers.token = `${token}`;
+        } 
   return config
 },
 function( error ) {

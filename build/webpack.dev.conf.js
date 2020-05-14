@@ -47,7 +47,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': require('../config/dev.env')
+      'process.env': require('../config/dev.env'),
+      'process.env.NODE_PATH': JSON.stringify(process.env.NODE_PATH)  //可根据这个变量设置不同的打包配置，url
     }),
     new webpack.ProvidePlugin({
       d3: 'd3',

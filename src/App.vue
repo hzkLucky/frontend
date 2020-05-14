@@ -28,8 +28,12 @@ export default {
     return {
     }
   },
+    mounted(){
+    console.log( process.env.NODE_PATH)
+  },
   methods: {
     logoOut() {
+      localStorage.removeItem('token')
       this.$router.push('/')
     },
     writerAPen(){
