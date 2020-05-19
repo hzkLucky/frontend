@@ -90,8 +90,6 @@ export default {
     var d3map = d3.map(dataset, function(d, i){
       return d.id
     })
-    console.log(d3map.has(1000))
-    console.log(d3map.get(1000))
     d3map.set(1003, {id: 1003, color: 'yellow'})
     d3map.remove(1002)
     d3map.keys() 

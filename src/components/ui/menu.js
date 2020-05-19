@@ -1,24 +1,24 @@
 export const leftMenu = [
     {
-        name: 'dataBase',
+        name: 'database',
         path: '/database',
         children: [],
         icon: 'el-icon-location'
     },
     {
-        name: 'personalSettings',
-        path: '/personalSettings',
+        name: 'consumptionBill',
+        path: '/consumptionBill',
         children: [],
         icon: 'el-icon-tickets'
     },
     {
-        name: 'changePlanning',
-        path: '/changePlanning',
+        name: 'incomeStatement',
+        path: '/incomeStatement',
         children: [],
-        icon: 'el-icon-menu'
+        icon: 'el-icon-document'
     },
     {
-        name: 'USER ADMIN',
+        name: 'consumptionStatistics',
         path: '/consumptionStatistics',
         children: [],
         icon: 'el-icon-setting'

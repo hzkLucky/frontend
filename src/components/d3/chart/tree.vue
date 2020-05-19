@@ -255,15 +255,12 @@ export default {
       return d3.tree().nodeSize([root.dx, root.dy])(root);
     };
     let root = tree(data);
-    console.log(root);
     let x0 = Infinity;
     let x1 = -x0;
     root.each(d => {
       if (d.x > x1) x1 = d.x;
       if (d.x < x0) x0 = d.x;
     });
-    console.log(x0)
-    console.log(x1)
     const svg = d3
       .select(".body")
       .append("svg")

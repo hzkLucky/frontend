@@ -1,6 +1,6 @@
 export const m = {
     welcomes: 'Welcome back',
-    dataBase: 'dataBase',
-    personalSettings: 'personalSettings',
-    changePlanning: 'changePlanning'
+    database: 'dataBase',
+    consumptionBill: 'Consumption bill',
+    consumptionStatistics: 'consumption Statistics'
 }

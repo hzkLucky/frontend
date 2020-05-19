@@ -21,7 +21,7 @@
             <!-- <el-submenu index="1"> -->
             <el-menu-item
               index="2"
-              v-for="( val, index) in leftMenu"
+              v-for="( val, index) in menus"
               :key="index"
               @click="$router.push(val.path)"
             >
@@ -41,10 +41,22 @@ import { leftMenu } from "./menu";
 export default {
   data() {
     return {
-      leftMenu
+      leftMenu,
+      menus: []
     };
   },
-  created() {},
+  created() {
+    let cacheMenus = JSON.parse(localStorage.getItem('menus'))
+    if( cacheMenus.type === 'admin'){
+      this.menus = leftMenu
+    }
+    else{
+      let menusName = cacheMenus.menus.split(',')
+      this.menus = this.leftMenu.filter( val => {
+        return menusName.includes(val.name)
+      })
+    }
+  },
   mounted() {},
   methods: {
     handleOpen(key, keyPath) {

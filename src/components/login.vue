@@ -167,13 +167,15 @@ export default {
           .then(data => {
             if (data.data.data.pass) {
               this.$message({
-                message: "您的注册申请已提交",
+                message: data.data.data.body,
                 type: "success"
               });
+              this.form.name = ''
+              this.form.password = ''
               this.dialogFormVisible = false;
             } else {
               this.$message({
-                message: "该用户已被注册",
+                message: data.data.data.body,
                 type: "warn"
               });
             }
@@ -185,6 +187,8 @@ export default {
     },
     register() {
       // this.$refs.register.open()
+      this.registerName = ''
+      this.registerPassword = ''
       this.dialogFormVisible = true;
     },
     normalLogin() {
@@ -194,19 +198,17 @@ export default {
           password: this.form.password
         })
         .then(data => {
-          console.log(data.data.data.pass);
           if (data.data.data.pass === false) {
             this.$message({
-              message: "用户名或密码错误",
+              message: data.data.data.body,
               type: "warning"
             });
-            this.form.name = "";
-            this.form.password = "";
           } else {
             localStorage.setItem("token", data.data.data.token);
+            localStorage.setItem('menus', JSON.stringify(data.data.data.body))
             // this.$axios.defaults.headers.common['token'] = data.data.token
             this.$store.commit("admin", data.data.data.type);
-            this.$router.push("/index");
+            this.$router.push("/database");
           }
         });
     }

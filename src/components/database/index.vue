@@ -21,7 +21,7 @@
             <span class="account__name">你的账户</span>
           </div>
           <div class="account__content">
-            <span class="account__content__left">￥{{income}}</span>
+            <span class="account__content__left">￥{{~~income}}</span>
             <span class="account__content__right">
               <div>本月支出￥{{penSum}}</div>
               <el-progress
@@ -169,8 +169,10 @@ export default {
     this.$axios.get('/gucp/incomeSum').then( data => {
       this.income = data.data.body[0].incomeSum
     })
-    this.$axios.get('/gucp/penSum').then( data => {
-      this.penSum = data.data.body[0].penSum
+     this.$axios.post('/gucp/penSum', {
+       currentPage: 1
+     }).then( data => {
+      this.penSum = data.data.body.sum[0].penSum ? data.data.body.sum[0].penSum : 0
     })
     this.$axios.get('/gucp/getUsereCount').then( res => {
       this.userCount = res.data.data.count
@@ -505,7 +507,7 @@ export default {
       /deep/ .status {
         text-align: center;
 
-        min-height: 220px;
+        min-height: 200px;
         > img {
           width: 24px;
           height: 23px;
